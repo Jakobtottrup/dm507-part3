@@ -5,7 +5,10 @@ public class Node {
     int character;
     int frequency;
 
-    public Node () {}
+    public Node () {
+        this.leftChild = leftChild;
+        this.rightChild = rightChild;
+    }
     public Node(int character, int frequency) {
         this.character = character;
         this.frequency = frequency;

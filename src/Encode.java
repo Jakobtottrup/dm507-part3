@@ -1,13 +1,14 @@
 import java.io.*;
 import java.lang.StringBuilder;
 import java.util.Arrays;
+import java.lang.Math.*;
 
 public class Encode {
 
     public Node huffman(PQHeap minHeap) {
         int n = minHeap.size;
         PQHeap q = minHeap;
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n-1; i++) {
             Node node = new Node();
             node.leftChild = (Node) q.extractMin().data;
             node.rightChild = (Node) q.extractMin().data;
@@ -41,6 +42,7 @@ public class Encode {
                 pqh.insert(new Element(frequencies[i], n));
             }
         }
+        System.out.println(pqh.size);
         return pqh;
     }
 
@@ -80,31 +82,40 @@ public class Encode {
     }
 
     public void encodeAndWrite(String inputFile, String outputFile, String[] codeArray) throws FileNotFoundException {
-        boolean read = true;
-        while (read){
-            try {
                 FileInputStream fis = new FileInputStream(inputFile);
                 FileOutputStream fos = new FileOutputStream(outputFile);
 
                 BitInputStream bis = new BitInputStream(fis);
                 BitOutputStream bos = new BitOutputStream(fos);
 
-                int a = bis.readInt();
-                String s = codeArray[a];
-                int[] numbers = new int [s.length()];
-                // For hvert Integer i strengen s findes den numeriske værdi
-                // og indsættes på i's plads.
-                for (int i = 0; i < s.length(); i++){
-                    numbers[i] = Character.getNumericValue(s.charAt(i));
-                }
+            try {
+                boolean reading = true;
+                while (reading){
+                    int a = fis.read();
+                    if (a != -1){
+                        System.out.println(a);
+                        String s = codeArray[a];
+                        System.out.println(Arrays.toString(codeArray));
+                        int[] numbers = new int [s.length()];
 
-                for (int i : numbers){
-                    bos.writeBit(i);
+                        for (int i = 0; i < s.length(); i++){
+                            numbers[i] = Character.getNumericValue(s.charAt(i));
+                        }
+                        System.out.println(Arrays.toString(numbers));
+            
+                        for (int i : numbers){
+                            //System.out.print(i);
+                            bos.writeBit(1);
+                        }
+                    } else {
+                        reading = false;
+                    }
                 }
-            } catch (IOException e) {
-                read = false;
+                bis.close();
+                bos.close();
+            } catch (Exception e) {
+                e.printStackTrace(System.out);
             }
-        }
     }
 
 

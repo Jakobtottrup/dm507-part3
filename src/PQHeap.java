@@ -62,7 +62,7 @@ public class PQHeap implements PQ {
     @Override
     public void insert(Element e) {
         size++;
-        a[size] = new Element(Integer.MAX_VALUE, null);
+        a[size] = new Element(Integer.MAX_VALUE, e.data);
         decreaseKey(a, size, e.key);
     }
 }
