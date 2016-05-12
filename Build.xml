@@ -6,7 +6,7 @@
     <target name="run-encode">
         <antcall target="clean-compile"/>
         <java classname="Encode" classpath="./bin" fork="yes">
-            <arg value="project.json"/>
+            <arg value="input.pdf"/>
             <arg value="output"/>
         </java>
     </target>
