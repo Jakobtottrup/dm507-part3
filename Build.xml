@@ -1,0 +1,20 @@
+<project default="clean-compile">
+    <target name="clean-compile">
+        <mkdir dir="bin"/>
+        <javac srcdir="." destdir="bin" includeantruntime="false"/>
+    </target>
+    <target name="run-encode">
+        <antcall target="clean-compile"/>
+        <java classname="Encode" classpath="./bin" fork="yes">
+            <arg value="project.json"/>
+            <arg value="output"/>
+        </java>
+    </target>
+    <target name="run-decode">
+        <antcall target="clean-compile"/>
+        <java classname="Decode" classpath="./bin" fork="yes">
+            <arg value="output"/>
+            <arg value="decoded"/>
+        </java>
+    </target>
+</project>
